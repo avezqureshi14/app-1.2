@@ -61,24 +61,27 @@ const prevPage = () => {
 </script>
 
 <template>
-    <div class="flex flex-wrap gap-4 p-4">
-        <div class="w-full md:w-1/2 p-4 bg-white rounded-lg shadow-md">
-            <h2 class="text-lg font-semibold text-center">Product Category Distribution</h2>
-            <apexchart type="pie" :options="{ labels: pieChartData.labels }" :series="pieChartData.series"></apexchart>
-        </div>
+    <a-layout-content style="padding: 20px">
+        <div class="flex flex-wrap gap-4 p-4">
+            <div class="w-full md:w-1/2 p-4 bg-white rounded-lg shadow-md">
+                <h2 class="text-lg font-semibold text-center">Product Category Distribution</h2>
+                <apexchart type="pie" :options="{ labels: pieChartData.labels }" :series="pieChartData.series">
+                </apexchart>
+            </div>
 
-        <div class="w-full md:w-1/2 p-4 bg-white rounded-lg shadow-md">
-            <h2 class="text-lg font-semibold text-center">Product Price Distribution</h2>
-            <apexchart type="bar" :options="{ xaxis: { categories: paginatedBarChartData.categories } }"
-                :series="[{ name: 'Price', data: paginatedBarChartData.prices }]">
-            </apexchart>
+            <div class="w-full md:w-1/2 p-4 bg-white rounded-lg shadow-md">
+                <h2 class="text-lg font-semibold text-center">Product Price Distribution</h2>
+                <apexchart type="bar" :options="{ xaxis: { categories: paginatedBarChartData.categories } }"
+                    :series="[{ name: 'Price', data: paginatedBarChartData.prices }]">
+                </apexchart>
 
-            <div class="flex justify-center mt-4">
-                <button @click="prevPage" class="px-4 py-2 bg-gray-300 rounded mr-2"
-                    :disabled="currentPage === 0">Prev</button>
-                <button @click="nextPage" class="px-4 py-2 bg-gray-300 rounded"
-                    :disabled="(currentPage + 1) * pageSize >= barChartData.categories.length">Next</button>
+                <div class="flex justify-center mt-4">
+                    <button @click="prevPage" class="px-4 py-2 bg-gray-300 rounded mr-2"
+                        :disabled="currentPage === 0">Prev</button>
+                    <button @click="nextPage" class="px-4 py-2 bg-gray-300 rounded"
+                        :disabled="(currentPage + 1) * pageSize >= barChartData.categories.length">Next</button>
+                </div>
             </div>
         </div>
-    </div>
+    </a-layout-content>
 </template>
