@@ -1,7 +1,4 @@
-# Vue 3 + TypeScript Project Folder Structure Documentation
-
-## Overview
-This document provides a structured explanation of the folder organization in the project. It follows best practices to ensure modularity, maintainability, and scalability.
+# Vue 3 Project Folder Structure 
 
 ## Root-Level Folders & Files
 ```
