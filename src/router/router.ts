@@ -1,13 +1,21 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Home from "@/views/Home.vue";
-import Charts from "@/views/Charts.vue";
-import NotFound from "@/views/NotFound.vue";
 
 const routes = [
     { path: '/', redirect: '/products' },
-    { path: '/products', component: Home, meta: { layout: "DashboardLayout" } },
-    { path: '/charts', component: Charts, meta: { layout: "DashboardLayout" } },
-    { path: '/:pathMatch(.*)*', component: NotFound } 
+    { 
+        path: '/products', 
+        component: () => import("@/views/Home.vue"), 
+        meta: { layout: "DashboardLayout" } 
+    },
+    { 
+        path: '/charts', 
+        component: () => import("@/views/Charts.vue"), 
+        meta: { layout: "DashboardLayout" } 
+    },
+    { 
+        path: '/:pathMatch(.*)*', 
+        component: () => import("@/views/NotFound.vue") 
+    }
 ];
 
 const router = createRouter({
