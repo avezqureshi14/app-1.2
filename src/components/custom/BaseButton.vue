@@ -1,19 +1,15 @@
-<template>
-    <a-button :type="type" :style="style" :size="size" :disabled="disabled" @click="handleClick">
-        <slot></slot>
-    </a-button>
-</template>
-
 <script setup>
 defineProps({
+    label: String,
     type: { type: String, default: "default" },
-    size: { type: String, default: "middle" },
-    style: { type: Object, default: () => ({}) },
-    disabled: { type: Boolean, default: false },
+    styles: { type: String, default: "" }
 });
-const emit = defineEmits(["click"]);
 
-const handleClick = () => {
-    emit("click");
-};
+const emit = defineEmits(['click']);
 </script>
+
+<template>
+    <a-button :type="type" :style="styles" @click="emit('click')">
+        <slot>{{ label }}</slot>
+    </a-button>
+</template>

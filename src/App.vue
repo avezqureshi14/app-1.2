@@ -1,7 +1,7 @@
 <script setup>
 import { RouterView, useRoute } from 'vue-router';
 import { computed } from 'vue';
-import DefaultLayout from './layouts/DefaultLayout.vue';
+import DefaultLayout from '@/layouts/DefaultLayout.vue';
 
 const route = useRoute();
 const layouts = {

@@ -1,7 +1,7 @@
 <script setup>
-import { defineProps, defineEmits } from 'vue';
 import { PieChartOutlined, AppstoreOutlined } from '@ant-design/icons-vue';
-import { RouterLink } from 'vue-router';
+import { RouterLink, useRoute } from 'vue-router';
+import { computed } from 'vue';
 
 const props = defineProps({
     selectedKeys: Array,
@@ -9,8 +9,15 @@ const props = defineProps({
 });
 
 const emit = defineEmits();
+const route = useRoute();
+
+// Dynamically set active tab based on current route
+const activeTab = computed(() => {
+    return route.path.includes('/charts') ? 'charts' : 'products';
+});
 
 const updateActiveTab = (tab) => {
+    console.log("Selected Tab:", tab);
     emit('update:activeTab', tab);
 };
 </script>
@@ -21,7 +28,7 @@ const updateActiveTab = (tab) => {
             <h2 class="title">Avez | Webknot</h2>
         </div>
 
-        <a-menu theme="dark" mode="inline" :selectedKeys="[props.activeTab]" @click="({ key }) => updateActiveTab(key)">
+        <a-menu theme="dark" mode="inline" :selectedKeys="[activeTab]" @click="({ key }) => updateActiveTab(key)">
             <a-menu-item key="products">
                 <RouterLink to="/products">
                     <template #icon>
@@ -41,34 +48,3 @@ const updateActiveTab = (tab) => {
         </a-menu>
     </a-layout-sider>
 </template>
-
-<style scoped>
-.custom-sidebar {
-    min-height: 100vh;
-    padding-top: 10px;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    padding: 16px;
-    text-align: center;
-}
-
-.logo-img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 10px;
-}
-
-.title {
-    color: white;
-    font-size: 20px;
-    font-weight: bold;
-}
-
-.a-menu-item {
-    font-size: 16px;
-}
-</style>

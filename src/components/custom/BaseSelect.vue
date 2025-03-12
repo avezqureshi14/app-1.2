@@ -2,13 +2,14 @@
 defineProps({
     modelValue: String,
     options: Array,
-    placeholder: String,
-    style: Object
+    placeholder: String
 });
-defineEmits(["update:modelValue"]);
+
+const emit = defineEmits(['update:modelValue']);
 </script>
+
 <template>
-    <a-select v-model:value="modelValue" :placeholder="placeholder" :style="style">
+    <a-select :value="modelValue" @change="(value) => emit('update:modelValue', value)" style="width: 200px;">
         <a-select-option v-for="option in options" :key="option" :value="option">
             {{ option }}
         </a-select-option>

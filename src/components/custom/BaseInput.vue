@@ -1,12 +1,33 @@
-<template>
-    <a-input v-model:value="modelValue" :placeholder="placeholder" :style="style" />
-</template>
-
 <script setup>
+import {EMITS} from '@/utils/constants'
+
 defineProps({
-    modelValue: String,
+    modelValue: [String, Number], 
     placeholder: String,
-    style: Object
+    type: { type: String, default: "text" }, 
+    className: { type: String, default: "" }, // Class-based styles
+    styles: { type: String, default: "" } // Inline styles
 });
-defineEmits(["update:modelValue"]);
+
+const emit = defineEmits([EMITS.UPDATE_MODEL_VALUE]);
 </script>
+
+<template>
+    <a-input 
+        v-if="type === 'text'"
+        :value="modelValue" 
+        :placeholder="placeholder" 
+        :class="className"
+        :style="styles"
+        @input="(e) => emit('update:modelValue', e.target.value)"
+    />
+
+    <a-input-number 
+        v-else 
+        :value="modelValue" 
+        :placeholder="placeholder" 
+        :class="className" 
+        :style="styles"
+        @change="(value) => emit('update:modelValue', value)" 
+    />
+</template>

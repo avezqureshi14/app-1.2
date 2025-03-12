@@ -1,6 +1,7 @@
 <script setup>
-import { defineProps, defineEmits, ref } from 'vue';
-
+import {ref} from 'vue'
+import {BaseInput} from '@/components/custom'
+import {productConfigs} from '@/utils/constants'
 const props = defineProps({
     isModalVisible: Boolean,
     products: Array // Ensure products are passed as a prop
@@ -17,16 +18,16 @@ const newProduct = ref({
 
 const handleAddProduct = () => {
     const newItem = {
-        id: (props.products?.length || 0) + 1, // Ensure products is used
+        id: (props.products?.length || 0) + 1, 
         title: newProduct.value.title,
         category: newProduct.value.category,
         price: newProduct.value.price,
         stock: newProduct.value.stock
     };
 
-    emit('add-product', newItem); // Emit event with new product
-    emit('update:isModalVisible', false); // Close modal
-    newProduct.value = { title: '', category: '', price: null, stock: null }; // Reset
+    emit('add-product', newItem); 
+    emit('update:isModalVisible', false); 
+    newProduct.value = { title: '', category: '', price: null, stock: null }; 
 };
 
 const handleCancel = () => {
@@ -36,9 +37,14 @@ const handleCancel = () => {
 
 <template>
     <a-modal :visible="isModalVisible" title="Add Product" @ok="handleAddProduct" @cancel="handleCancel">
-        <a-input v-model:value="newProduct.title" placeholder="Title" style="margin-bottom: 10px" />
-        <a-input v-model:value="newProduct.category" placeholder="Category" style="margin-bottom: 10px" />
-        <a-input-number v-model:value="newProduct.price" placeholder="Price" style="margin-bottom: 10px; width: 100%" />
-        <a-input-number v-model:value="newProduct.stock" placeholder="Stock" style="width: 100%" />
+        <BaseInput 
+            v-for="field in productConfigs" 
+            :key="field.id" 
+            v-model="newProduct[field.model]" 
+            :placeholder="field.placeholder" 
+            :type="field.type"
+            :style="field.styles"
+        />
     </a-modal>
 </template>
+

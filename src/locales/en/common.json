@@ -1,0 +1,30 @@
+{
+  "filters": {
+    "placeholder_category": "Filter by category",
+    "remove_filter": "Remove Filter",
+    "placeholder_search": "Search by title"
+  },
+  "add_product": {
+    "modal_title": "Add Product"
+  },
+  "sidebar": {
+    "title": "Avez | Webknot",
+    "products": "Products",
+    "charts": "Charts"
+  },
+  "charts": {
+    "loading": "Loading...",
+    "error": "Error loading data",
+    "product_price_distribution": "Product Price Distribution",
+    "product_category_distribution": "Product Category Distribution",
+    "prev": "Prev",
+    "next": "Next"
+  },
+  "products": {
+    "add_product": "Add Product",
+    "title": "Title",
+    "category": "Category",
+    "price": "Price",
+    "stock": "Stock"
+  }
+}

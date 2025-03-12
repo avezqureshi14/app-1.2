@@ -1,6 +1,5 @@
 <script setup>
-import { defineProps, defineEmits } from 'vue';
-
+import {BaseButton } from '@/components/custom';
 const props = defineProps({
     categories: Array,
     selectedCategory: String,
@@ -8,12 +7,12 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['update:selectedCategory', 'update:searchQuery', 'clearFilters']);
-
 const clearFilters = () => {
     emit('update:selectedCategory', null);
     emit('update:searchQuery', '');
     emit('clearFilters');
 };
+
 </script>
 
 <template>
@@ -23,9 +22,7 @@ const clearFilters = () => {
             {{ category }}
         </a-select-option>
     </a-select>
-
-    <a-button @click="clearFilters" style="margin-left: 10px">Remove Filter</a-button>
-
+    <BaseButton label="Remove Filter" styles="margin-left: 10px;"   @click="clearFilters"  />
     <a-input v-model:value="props.searchQuery" @input="(e) => emit('update:searchQuery', e.target.value)"
         placeholder="Search by title" style="margin-bottom: 10px; margin-top: 10px" />
 </template>
