@@ -1,5 +1,15 @@
 # Vue 3 Project Folder Structure 
 
+## Some features and practices followed
+
+- i18n localization  
+- Error boundary  
+- Lazy loading  
+- Scalable file folder structure  
+- Composables  
+- Layouts  
+- Many more...
+
 ## Root-Level Folders & Files
 ```
 /src
