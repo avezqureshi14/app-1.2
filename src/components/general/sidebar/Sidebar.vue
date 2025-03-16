@@ -1,7 +1,6 @@
 <script setup>
-import { computed } from 'vue';
+import { ref, computed, watchEffect } from 'vue';
 import { useRoute, RouterLink } from 'vue-router';
-import { PieChartOutlined, AppstoreOutlined } from '@ant-design/icons-vue';
 import { Menu } from 'ant-design-vue';
 
 const props = defineProps({
@@ -12,14 +11,15 @@ const props = defineProps({
 
 const emit = defineEmits();
 const route = useRoute();
+const selectedKey = ref(props.selectedKeys?.[0] || 'products'); // Default key
 
-const activeTab = computed(() => {
-    return props.selectedKeys?.[0] || 
-        (route.path.includes('/charts') ? 'charts' : 'products');
+watchEffect(() => {
+    selectedKey.value = route.path.split('/')[1] || 'products';
+    emit('update:activeTab', selectedKey.value);
 });
 
-
 const updateActiveTab = (tab) => {
+    selectedKey.value = tab;
     emit('update:activeTab', tab);
 };
 </script>
@@ -31,18 +31,22 @@ const updateActiveTab = (tab) => {
         </div>
 
         <a-menu 
-  :selectedKeys="[activeTab]" 
-  @update:selectedKeys="(keys) => updateActiveTab(keys[0])"
-  mode="inline" 
-  theme="dark">
+            :selectedKeys="[selectedKey]" 
+            @update:selectedKeys="(keys) => updateActiveTab(keys[0])"
+            mode="inline" 
+            theme="dark"
+        >
             <template v-for="section in props.links" :key="section.title">
                 <a-menu-item-group>
                     <template #title>
                         <span class="text-gray-500 text-sm font-semibold">{{ section.title }}</span>
                     </template>
-                    <a-menu-item v-for="link in section.data" :key="link.id">
+                    <a-menu-item 
+                        v-for="link in section.data" 
+                        :key="link.id" 
+                        :class="{ 'ant-menu-item-selected': selectedKey === link.name.toLowerCase() }"
+                    >
                         <RouterLink :to="`/${link.name.toLowerCase()}`">
-                            <component :is="link.icon === 'pie-chart' ? PieChartOutlined : AppstoreOutlined" />
                             <span>{{ link.name }}</span>
                         </RouterLink>
                     </a-menu-item>
