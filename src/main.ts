@@ -4,12 +4,14 @@ import App from './App.vue';
 import Antd from 'ant-design-vue';
 import VueApexCharts from 'vue3-apexcharts';
 import router from './router/router.ts';
-
+import i18n from './locales/i18n.ts';
+import './style.css'
 const app = createApp(App);
 
 const queryClient = new QueryClient();
 
 app.use(Antd);
+app.use(i18n);
 app.use(router);
 app.use(VueQueryPlugin, { queryClient });
 app.component('apexchart', VueApexCharts);

@@ -1,5 +1,4 @@
 import type { SidebarTabsList } from "@/interfaces/types";
-
 export const appLinks: SidebarTabsList[] = [
     {
         title: 'General',

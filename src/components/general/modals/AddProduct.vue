@@ -2,12 +2,15 @@
 import {ref} from 'vue'
 import {BaseInput} from '@/components/custom'
 import {productConfigs} from '@/utils/constants'
+import { useLocale } from '@/composables';
+
 const props = defineProps({
     isModalVisible: Boolean,
     products: Array // Ensure products are passed as a prop
 });
 
 const emit = defineEmits();
+const { t } = useLocale(); 
 
 const newProduct = ref({
     title: '',
@@ -36,7 +39,7 @@ const handleCancel = () => {
 </script>
 
 <template>
-    <a-modal :visible="isModalVisible" title="Add Product" @ok="handleAddProduct" @cancel="handleCancel">
+    <a-modal :visible="isModalVisible" :title="t('add_product.modal_title')" @ok="handleAddProduct" @cancel="handleCancel">
         <BaseInput 
             v-for="field in productConfigs" 
             :key="field.id" 

@@ -1,0 +1,30 @@
+{
+  "filters": {
+    "placeholder_category": "ವಿಭಾಗದ ಮೂಲಕ ಫಿಲ್ಟರ್ ಮಾಡಿ",
+    "remove_filter": "ಫಿಲ್ಟರ್ ತೆಗೆದುಹಾಕಿ",
+    "placeholder_search": "ಶೀರ್ಷಿಕೆಯ ಮೂಲಕ ಹುಡುಕಿ"
+  },
+  "add_product": {
+    "modal_title": "ಉತ್ಪನ್ನವನ್ನು ಸೇರಿಸಿ"
+  },
+  "sidebar": {
+    "title": "Avez | Webknot",
+    "products": "ಉತ್ಪನ್ನಗಳು",
+    "charts": "ಚಾರ್ಟ್‌ಗಳು"
+  },
+  "charts": {
+    "loading": "ಲೋಡ್ ಆಗುತ್ತಿದೆ...",
+    "error": "ಡೇಟಾ ಲೋಡ್ ಮಾಡುವಲ್ಲಿ ದೋಷ",
+    "product_price_distribution": "ಉತ್ಪನ್ನ ಬೆಲೆ ಹಂಚಿಕೆ",
+    "product_category_distribution": "ಉತ್ಪನ್ನ ವರ್ಗ ವಿತರಣಾ",
+    "prev": "ಹಿಂದಿನದು",
+    "next": "ಮುಂದಿನದು"
+  },
+  "products": {
+    "add_product": "ಉತ್ಪನ್ನವನ್ನು ಸೇರಿಸಿ",
+    "title": "ಶೀರ್ಷಿಕೆ",
+    "category": "ವಿಭಾಗ",
+    "price": "ಬೆಲೆ",
+    "stock": "ಸ್ಟಾಕ್"
+  }
+}
