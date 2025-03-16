@@ -1,4 +1,6 @@
-# Vue 3 Project Folder Structure 
+# Vue 3 Avez Assignment
+
+## Deployed Link : https://rkt-wk-avez.netlify.app/products
 
 ## Some features and practices followed
 
