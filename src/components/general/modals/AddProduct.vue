@@ -29,33 +29,32 @@ const validationRules = {
 
 const { validateField, validateForm, errors } = useValidations(validationRules);
 
-const handleAddProduct = () => {
-  const formData = {
-    title: newProduct.value.title || "",
-    category: newProduct.value.category || "",
-    price: newProduct.value.price || "",
-    stock: newProduct.value.stock || "",
-  };
+const getSanitizedFormData = () => ({
+  title: newProduct.value.title || "",
+  category: newProduct.value.category || "",
+  price: newProduct.value.price || "",
+  stock: newProduct.value.stock || "",
+});
 
+const addProduct = () => {
+  const formData = getSanitizedFormData();
   if (!validateForm(formData)) {
     toast.error("Please correct the errors before submitting.");
     return;
   }
 
-  const newItem = {
-    id: (props.products?.length || 0) + 1,
-    ...newProduct.value,
-  };
-
-  emit("add-product", newItem);
-  emit("update:isModalVisible", false);
+  emit("add-product", { id: (props.products?.length || 0) + 1, ...newProduct.value });
   toast.success("Product added successfully!");
-
-  newProduct.value = { title: "", category: "", price: "", stock: "" };
+  closeModal();
 };
 
-const handleCancel = () => {
+const closeModal = () => {
   emit("update:isModalVisible", false);
+  resetForm();
+};
+
+const resetForm = () => {
+  newProduct.value = { title: "", category: "", price: "", stock: "" };
 };
 </script>
 
@@ -63,8 +62,8 @@ const handleCancel = () => {
   <a-modal
     :visible="isModalVisible"
     :title="t('add_product.modal_title')"
-    @ok="handleAddProduct"
-    @cancel="handleCancel"
+    @ok="addProduct"
+    @cancel="closeModal"
   >
     <div v-for="field in productConfigs" :key="field.id">
       <BaseInput
