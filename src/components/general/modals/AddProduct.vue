@@ -1,6 +1,6 @@
 <script setup>
-import { ref, computed } from "vue";
-import { BaseInput } from "@/components/custom";
+import { ref } from "vue";
+import { BaseInput, BaseModal } from "@/components/custom";
 import { productConfigs } from "@/utils/constants";
 import { useLocale, useValidations } from "@/composables";
 import { useToast } from "vue-toastification";
@@ -12,6 +12,7 @@ const props = defineProps({
 const emit = defineEmits();
 const { t } = useLocale();
 const toast = useToast();
+const loading = ref(false);
 
 const newProduct = ref({
   title: "",
@@ -36,21 +37,27 @@ const getSanitizedFormData = () => ({
   stock: newProduct.value.stock || "",
 });
 
-const addProduct = () => {
+const addProduct = async () => {
   const formData = getSanitizedFormData();
   if (!validateForm(formData)) {
     toast.error("Please correct the errors before submitting.");
     return;
   }
 
-  emit("add-product", { id: (props.products?.length || 0) + 1, ...newProduct.value });
-  toast.success("Product added successfully!");
-  closeModal();
+  loading.value = true;
+
+  setTimeout(() => {
+    emit("add-product", { id: (props.products?.length || 0) + 1, ...newProduct.value });
+    toast.success("Product added successfully!");
+    closeModal();
+    loading.value = false;
+  }, 1000);
 };
 
 const closeModal = () => {
   emit("update:isModalVisible", false);
   resetForm();
+  console.log('Closing modal')
 };
 
 const resetForm = () => {
@@ -59,12 +66,16 @@ const resetForm = () => {
 </script>
 
 <template>
-  <a-modal
-    :visible="isModalVisible"
-    :title="t('add_product.modal_title')"
-    @ok="addProduct"
-    @cancel="closeModal"
-  >
+<BaseModal
+  :isVisible="isModalVisible"
+  :title="t('add_product.modal_title')"
+  okText="Add Product"
+  cancelText="Cancel"
+  :loading="loading"
+  @ok="addProduct"
+  @cancel="closeModal"
+  @update:isVisible="isModalVisible = $event" 
+>
     <div v-for="field in productConfigs" :key="field.id">
       <BaseInput
         v-model="newProduct[field.model]"
@@ -75,7 +86,7 @@ const resetForm = () => {
       />
       <p v-if="errors[field.model]" class="error-text">{{ errors[field.model] }}</p>
     </div>
-  </a-modal>
+  </BaseModal>
 </template>
 
 <style scoped>
