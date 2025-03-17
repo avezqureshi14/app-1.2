@@ -30,7 +30,6 @@ const validationRules = {
 const { validateField, validateForm, errors } = useValidations(validationRules);
 
 const handleAddProduct = () => {
-  // Convert null values to empty strings for validation
   const formData = {
     title: newProduct.value.title || "",
     category: newProduct.value.category || "",
@@ -52,7 +51,6 @@ const handleAddProduct = () => {
   emit("update:isModalVisible", false);
   toast.success("Product added successfully!");
 
-  // Reset form
   newProduct.value = { title: "", category: "", price: "", stock: "" };
 };
 
