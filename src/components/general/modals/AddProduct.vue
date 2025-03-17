@@ -2,7 +2,8 @@
 import { ref, computed } from "vue";
 import { BaseInput } from "@/components/custom";
 import { productConfigs } from "@/utils/constants";
-import { useLocale , useValidations } from "@/composables";
+import { useLocale, useValidations } from "@/composables";
+import { useToast } from "vue-toastification";
 
 const props = defineProps({
   isModalVisible: Boolean,
@@ -10,12 +11,13 @@ const props = defineProps({
 });
 const emit = defineEmits();
 const { t } = useLocale();
+const toast = useToast();
 
 const newProduct = ref({
   title: "",
   category: "",
-  price: null,
-  stock: null,
+  price: "",
+  stock: "",
 });
 
 const validationRules = {
@@ -28,19 +30,30 @@ const validationRules = {
 const { validateField, validateForm, errors } = useValidations(validationRules);
 
 const handleAddProduct = () => {
-  if (!validateForm(newProduct.value)) return; 
+  // Convert null values to empty strings for validation
+  const formData = {
+    title: newProduct.value.title || "",
+    category: newProduct.value.category || "",
+    price: newProduct.value.price || "",
+    stock: newProduct.value.stock || "",
+  };
+
+  if (!validateForm(formData)) {
+    toast.error("Please correct the errors before submitting.");
+    return;
+  }
 
   const newItem = {
     id: (props.products?.length || 0) + 1,
-    title: newProduct.value.title,
-    category: newProduct.value.category,
-    price: newProduct.value.price,
-    stock: newProduct.value.stock,
+    ...newProduct.value,
   };
 
   emit("add-product", newItem);
   emit("update:isModalVisible", false);
-  newProduct.value = { title: "", category: "", price: null, stock: null };
+  toast.success("Product added successfully!");
+
+  // Reset form
+  newProduct.value = { title: "", category: "", price: "", stock: "" };
 };
 
 const handleCancel = () => {
