@@ -11,7 +11,7 @@ const props = defineProps({
 
 const emit = defineEmits();
 const route = useRoute();
-const selectedKey = ref(props.selectedKeys?.[0] || 'products'); // Default key
+const selectedKey = ref(props.selectedKeys?.[0] || 'products'); 
 
 watchEffect(() => {
     selectedKey.value = route.path.split('/')[1] || 'products';

@@ -5,8 +5,8 @@ defineProps({
     modelValue: [String, Number], 
     placeholder: String,
     type: { type: String, default: "text" }, 
-    className: { type: String, default: "" }, // Class-based styles
-    styles: { type: String, default: "" } // Inline styles
+    className: { type: String, default: "" }, 
+    styles: { type: String, default: "" } 
 });
 
 const emit = defineEmits([EMITS.UPDATE_MODEL_VALUE]);
