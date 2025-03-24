@@ -1,6 +1,13 @@
 import { ref, computed, onMounted } from 'vue';
 import axios from 'axios';
 import type { Ref } from 'vue';
+import type { Product } from '@/interfaces/types';
+import { useQuery } from '@tanstack/vue-query';
+
+const fetchProducts = async (): Promise<Product[]> => {
+    const response = await axios.get<{ products: Product[] }>('https://dummyjson.com/products');
+    return response.data.products;
+};
 
 type ChartData = {
     pie: { series: number[]; labels: string[] };
@@ -14,34 +21,28 @@ export function useChart() {
         pie: { series: [], labels: [] },
         bar: { categories: [], prices: [] }
     });
-    const isLoading: Ref<boolean> = ref(true);
-    const isError: Ref<boolean> = ref(false);
-
+    const { data: products, isLoading, isError} = useQuery({
+        queryKey: ['products'],
+        queryFn: fetchProducts,
+    });
     const fetchChartData = async () => {
         isLoading.value = true;
         isError.value = false;
-        try {
-            const response = await axios.get('https://dummyjson.com/products');
-            const products = response.data.products;
-            
-            const categoryCount: Record<string, number> = {};
-            products.forEach((product: any) => {
-                categoryCount[product.category] = (categoryCount[product.category] || 0) + 1;
-            });
-
-            chartData.value = {
-                pie: { series: Object.values(categoryCount), labels: Object.keys(categoryCount) },
-                bar: {
-                    categories: products.map((p: any) => p.title),
-                    prices: products.map((p: any) => p.price)
-                }
-            };
-        } catch (error) {
-            isError.value = true;
-            console.error('Error fetching data:', error);
-        } finally {
-            isLoading.value = false;
+        const categoryCount: Record<string, number> = {};
+        if (!products.value) {
+            return [];
         }
+        products.value.forEach((product: any) => {
+            categoryCount[product.category] = (categoryCount[product.category] || 0) + 1;
+        });
+
+        chartData.value = {
+            pie: { series: Object.values(categoryCount), labels: Object.keys(categoryCount) },
+            bar: {
+                categories: products.value.map((p: any) => p.title),
+                prices: products.value.map((p: any) => p.price)
+            }
+        };
     };
 
     onMounted(fetchChartData);

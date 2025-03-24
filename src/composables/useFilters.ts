@@ -12,12 +12,13 @@ export function useFilter(products: { value: Product[] }) {
     };
 
     const filteredProducts = computed(() => {
+        if (!products.value) return []; 
         return products.value.filter((p: Product) =>
             (!selectedCategory.value || p.category === selectedCategory.value) &&
             (!searchQuery.value || p.title.toLowerCase().includes(searchQuery.value.toLowerCase()))
         );
     });
-
+    
     return {
         searchQuery,
         selectedCategory,

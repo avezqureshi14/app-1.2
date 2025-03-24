@@ -1,5 +1,4 @@
 <script setup>
-import {EMITS} from '@/utils/constants'
 
 defineProps({
     modelValue: [String, Number], 
@@ -9,7 +8,7 @@ defineProps({
     styles: { type: String, default: "" } 
 });
 
-const emit = defineEmits([EMITS.UPDATE_MODEL_VALUE]);
+const emit = defineEmits(['update:modelValue']);
 </script>
 
 <template>

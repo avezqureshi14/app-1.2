@@ -9,7 +9,6 @@ defineProps({
 const emit = defineEmits(["update:isVisible", "ok", "cancel"]);
 
 const handleClose = () => {
-  emit("update:isVisible", false); 
   emit("cancel"); 
 };
 </script>
